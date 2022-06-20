@@ -3,6 +3,7 @@ const db = require('../models');
 
 const OP = Sequelize.Op
 
+// Get Method
 const getAllUsers = async (req, res) => {
     const allUsers = await db.Users.findAll();
 
@@ -16,6 +17,7 @@ const getUsersById = async (req, res) => {
     res.status(200).send(oneUsers)
 }
 
+// Post Method
 const createUser = async (req, res) => {
     const {username, password, firstname, lastname, email} = req.body
     console.log('req.body=>', req.body)
@@ -32,8 +34,37 @@ const createUser = async (req, res) => {
     res.status(201).send(newUser)
 }
 
+// PUT Method
+const updateUser = async (req, res) => {
+    const id = req.params.id
+    const {username, password, firstname, lastname, email} = req.body
+
+    const updateUser = await db.Users.update(
+        {
+            username, password, firstname, lastname, email
+        }, {
+            where: {
+                id: id
+            }
+        })
+    res.status(201).send(updateUser)
+}
+
+// Delete Method
+const deleteUserById = async (req, res) => {
+    const id = req.params.id
+
+    const deleteUser = await db.Users.destroy({
+        where: {id: id}
+    })
+
+    res.send(200).send(deleteUser)
+}
+
 module.exports = {
     getAllUsers,
     getUsersById,
-    createUser
+    createUser,
+    updateUser,
+    deleteUserById
 }
