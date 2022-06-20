@@ -4,15 +4,14 @@ module.exports = (sequelize, DataTypes) => {
         password: DataTypes.STRING(255),
         firstname: DataTypes.STRING(255),
         lastname: DataTypes.STRING(255),
-        email: DataTypes.STRING(255)
+        email: DataTypes.STRING(255),
     }, {
-        tableName: 'users'
+        tableName: 'users',
+        timestamps: false
     });
 
-    let foreignKey = 'user_id'
     Users.associate = models => {
-        Users.hasOne(models.Customers, {foreignKey, as: 'customers', onDelete: 'CASCADE'});
-        Users.hasOne(models.Technicians, {foreignKey, as: 'technicians', onDelete: 'CASCADE'});
+        Users.hasOne(models.Customers, {foreignKey: 'user_id', as: 'customers', onDelete: 'CASCADE'});
     }
     return Users
 }
