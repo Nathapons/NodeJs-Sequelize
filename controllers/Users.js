@@ -20,7 +20,6 @@ const getUsersById = async (req, res) => {
 // Post Method
 const createUser = async (req, res) => {
     const {username, password, firstname, lastname, email} = req.body
-    console.log('req.body=>', req.body)
     const newUser = await db.Users.create(
         {
             username: username,
@@ -31,7 +30,7 @@ const createUser = async (req, res) => {
         }
     )
 
-    res.status(201).send(newUser)
+    res.status(201).send({message: 'create user complete'})
 }
 
 // PUT Method
@@ -47,7 +46,7 @@ const updateUser = async (req, res) => {
                 id: id
             }
         })
-    res.status(201).send(updateUser)
+    res.status(201).send({message: `update id at ${id} is complete`})
 }
 
 // Delete Method
@@ -58,7 +57,7 @@ const deleteUserById = async (req, res) => {
         where: {id: id}
     })
 
-    res.send(200).send(deleteUser)
+    res.send(200).send({message: `delete id at ${id} is complete`})
 }
 
 module.exports = {
