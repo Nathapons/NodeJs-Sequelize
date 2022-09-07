@@ -20,7 +20,7 @@ const getUsersById = async (req, res) => {
 // Post Method
 const createUser = async (req, res) => {
     const {username, password, firstname, lastname, email} = req.body
-    const newUser = await db.Users.create(
+    await db.Users.create(
         {
             username: username,
             password: password,
@@ -28,6 +28,8 @@ const createUser = async (req, res) => {
             lastname: lastname,
             email: email
         }
+    ).then(
+        user => console.log(user)
     )
 
     res.status(201).send({message: 'create user complete'})

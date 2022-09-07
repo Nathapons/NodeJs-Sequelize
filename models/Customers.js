@@ -1,22 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
-    const model = sequelize.define("Customers", {
-        phone_no: {
+    const Customers = sequelize.define("Customers", {
+        phoneNo: {
+            field: "phone_no",
             type: DataTypes.STRING(255),
         },
         avatar: {
             type: DataTypes.STRING(255),
         },
         permission: {
-            type: DataTypes.STRING(255),
-        },
+            type: DataTypes.BOOLEAN,
+            default: false
+        }
     }, {
         tableName: 'customers',
-        timestamps: false
+        timestamps: true,
+        underscored: true
     });
 
-    model.associate = models => {
-        model.belongsTo(models.Users, { foreignKey: 'user_id', onDelete: 'CASCADE', as: 'customers'})
+    Customers.associate = models => {
+        Customers.belongsTo(models.Users, { foreignKey: 'user_id', onDelete: 'CASCADE', as: 'customers'})
     }
 
-    return model
+    return Customers
 }
